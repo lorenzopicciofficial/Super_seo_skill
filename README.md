@@ -1,126 +1,126 @@
 # Super SEO Skill
 
-Cinque skill per Claude Code che coprono tutto il ciclo SEO — dall'analisi iniziale alle correzioni concrete nel codice — ottimizzate anche per la visibilità sulle AI come ChatGPT, Perplexity e Google AI Overviews.
+Five Claude Code skills covering the full SEO cycle — from initial analysis to concrete code fixes — with built-in support for AI visibility (GEO) and answer engine optimization (AEO).
 
-Leggere per design: ~15.000 token totali contro i ~145.000 di soluzioni equivalenti.
-
----
-
-## Le 5 skill
-
-### `/seo-audit` — Capire cosa non va
-Analizza una pagina o un sito intero e restituisce un report chiaro, con i problemi ordinati per priorità e spiegati in modo comprensibile. È il punto di partenza: ti dice cosa guardare prima di toccare qualsiasi cosa.
-
-**Quando usarla:**
-- "Perché questa pagina non appare su Google?"
-- "Fai un'analisi SEO di questo sito"
-- "Cosa devo migliorare per posizionarmi meglio?"
-- Prima di ottimizzare: per sapere dove concentrarsi
+Lightweight by design: ~15,000 tokens total vs ~145,000 for equivalent all-in-one solutions.
 
 ---
 
-### `/seo-content` — Migliorare i testi
-Ottimizza i testi per essere trovati su Google, ma anche per essere citati dalle AI. Copre SEO classico (titoli, struttura, parole chiave), GEO (come farsi citare da Google AI Overviews, ChatGPT, Perplexity) e AEO (come comparire nelle risposte rapide e vocali).
+## The 5 Skills
 
-**Quando usarla:**
-- "Ottimizza questo articolo per SEO"
-- "Voglio che questa pagina venga citata da Google AI"
-- "Riscrivi questo testo per posizionarsi su [parola chiave]"
-- "Aggiungi una sezione FAQ ottimizzata"
-- Per qualsiasi testo che deve portare traffico organico
+### `/seo-audit` — Understand what's wrong
+Analyzes a page or entire site and returns a prioritized report with issues explained in plain language. The right starting point: tells you where to focus before touching anything.
 
----
-
-### `/seo-schema` — Aiutare Google a capirti
-Genera il codice che permette a Google di mostrare informazioni arricchite nei risultati: stelle, prezzi, FAQ direttamente nella pagina dei risultati, breadcrumb, informazioni sull'autore. Le AI usano questi dati per citare le fonti in modo più preciso.
-
-**Quando usarla:**
-- "Voglio le stelle nei risultati di Google"
-- "Aggiungi i dati strutturati alla pagina prodotto"
-- "Fai comparire le FAQ direttamente su Google"
-- "Aggiungi lo schema markup all'articolo"
-- Tipi supportati: Article, Product, FAQ, Organization, LocalBusiness, Breadcrumb
+**When to use:**
+- "Why isn't this page showing up on Google?"
+- "Do an SEO audit of this site"
+- "What should I improve to rank better?"
+- Before optimizing — to know what actually needs attention
 
 ---
 
-### `/seo-technical` — Risolvere i problemi tecnici
-Controlla e corregge tutto ciò che impedisce a Google di trovare e leggere le pagine: robots.txt, sitemap, canonical, tag noindex, redirect, ottimizzazione mobile, velocità di caricamento. Spesso i siti non si indicizzano per errori tecnici banali, non per mancanza di contenuto.
+### `/seo-content` — Improve the text
+Optimizes copy for Google rankings and for being cited by AI engines. Covers classic SEO (titles, structure, keywords), GEO (how to get cited by Google AI Overviews, ChatGPT, Perplexity), and AEO (how to appear in featured snippets and voice search answers).
 
-**Quando usarla:**
-- "Il sito non appare su Google"
-- "Controlla il robots.txt"
-- "La sitemap è corretta?"
-- "Ho problemi di indicizzazione"
-- Dopo un lancio di sito nuovo, per verificare che tutto sia a posto
-
----
-
-### `/seo-fix` — Applicare le correzioni
-Entra nei file del progetto e applica concretamente le modifiche: aggiunge meta tag mancanti, corregge canonical, inserisce dati strutturati, aggiorna robots.txt e sitemap. Non dà istruzioni — fa le modifiche direttamente nel codice.
-
-**Quando usarla:**
-- Dopo `/seo-audit`, per implementare quanto emerso
-- "Aggiungi i meta tag a tutte le pagine"
-- "Applica le correzioni SEO al progetto"
-- "Correggi il canonical su questa pagina"
-- Quando vuoi le modifiche fatte, non spiegate
+**When to use:**
+- "Optimize this article for SEO"
+- "I want this page cited by Google AI"
+- "Rewrite this to rank for [keyword]"
+- "Add an optimized FAQ section"
+- Any text that needs to drive organic traffic
 
 ---
 
-## Flussi di lavoro tipici
+### `/seo-schema` — Help Google and AI understand you
+Generates the code that lets Google display rich results: stars, prices, FAQs directly in search results, breadcrumbs, author information. AI engines use this data to cite sources more accurately and to identify authoritative content.
 
-### Nuovo sito da ottimizzare
+**When to use:**
+- "I want stars in Google results"
+- "Add structured data to the product page"
+- "Make FAQs appear directly on Google"
+- "Add schema markup to the article"
+- Supported types: Article, Product, FAQ, Organization, LocalBusiness, Breadcrumb
+
+---
+
+### `/seo-technical` — Fix technical blockers
+Checks and corrects everything that prevents Google from finding and reading pages: robots.txt, sitemap, canonical tags, noindex, redirects, mobile optimization, and page speed. Sites often fail to rank due to trivial technical errors, not lack of content.
+
+**When to use:**
+- "The site doesn't appear on Google"
+- "Check the robots.txt"
+- "Is the sitemap correct?"
+- "I have indexing problems"
+- After launching a new site, to verify everything is configured correctly
+
+---
+
+### `/seo-fix` — Apply the fixes
+Edits project files directly: adds missing meta tags, fixes canonicals, inserts structured data, updates robots.txt and sitemap. Doesn't give instructions — makes the actual changes in the code.
+
+**When to use:**
+- After `/seo-audit`, to implement the findings
+- "Add meta tags to all pages"
+- "Apply SEO fixes to the project"
+- "Fix the canonical on this page"
+- When you want the changes done, not explained
+
+---
+
+## Typical Workflows
+
+### New site to optimize
 ```
 /seo-audit  →  /seo-content  →  /seo-schema  →  /seo-fix
 ```
-Prima capisci cosa manca, poi ottimizzi i testi, aggiungi i dati strutturati e applichi tutto.
+Understand what's missing, optimize the text, add structured data, apply everything.
 
-### Sito che non si indicizza
+### Site not showing on Google
 ```
 /seo-technical  →  /seo-fix
 ```
-Spesso è un problema di robots.txt o noindex — si risolve in pochi minuti.
+Usually a robots.txt or noindex issue — resolved in minutes.
 
-### Articolo da ottimizzare
+### Article to optimize
 ```
 /seo-content  →  /seo-schema  →  /seo-fix
 ```
-Ottimizzi il testo, aggiungi lo schema Article o FAQ, applichi le modifiche.
+Optimize the text, add Article or FAQ schema, apply changes.
 
-### Pagina prodotto e-commerce
+### E-commerce product page
 ```
 /seo-audit  →  /seo-schema  →  /seo-content  →  /seo-fix
 ```
-Analisi, dati strutturati con prezzo e stelle, testo ottimizzato, tutto applicato.
+Audit, structured data with price and ratings, optimized copy, everything applied.
 
-### Vuoi essere citato dalle AI (GEO/AEO)
+### Appear in AI results (GEO/AEO)
 ```
 /seo-content  →  /seo-schema
 ```
-`/seo-content` ottimizza il testo per la citabilità da AI. `/seo-schema` aggiunge i dati strutturati che le AI usano come segnali di affidabilità.
+`/seo-content` optimizes text for AI citability. `/seo-schema` adds the structured data signals that AI engines use to evaluate source authority.
 
 ---
 
-## Differenze rispetto a soluzioni più grandi
+## Comparison
 
-| | Super SEO Skill | claude-seo completo |
+| | Super SEO Skill | Full claude-seo |
 |---|---|---|
-| Token per sessione | ~15.000 | ~145.000 |
-| Skill | 5 mirate | 23 |
-| Copertura | SEO · GEO · AEO · Technical | + backlinks, e-commerce, local, hreflang, maps, programmatic… |
-| Adatto a | Siti, blog, e-commerce standard | Agenzie SEO, audit enterprise |
+| Tokens per session | ~15,000 | ~145,000 |
+| Skills | 5 focused | 23 |
+| Coverage | SEO · GEO · AEO · Technical | + backlinks, e-commerce, local, hreflang, maps, programmatic… |
+| Best for | Sites, blogs, standard e-commerce | SEO agencies, enterprise audits |
 
-Se hai bisogno di funzionalità avanzate (analisi backlink, SEO locale multi-sede, SEO e-commerce avanzato, programmatic SEO su larga scala), valuta di integrare skill specifiche aggiuntive.
+For advanced needs (backlink analysis, multi-location local SEO, programmatic SEO at scale), consider adding dedicated skills on top.
 
 ---
 
-## Installazione
+## Installation
 
 ```
 /plugins add marketplace super-seo lorenzopicciofficial/Super_seo_skill
 ```
 
-Poi installa le skill che ti servono:
+Install individual skills as needed:
 
 ```
 /plugins install seo-audit@super-seo
@@ -132,18 +132,18 @@ Poi installa le skill che ti servono:
 
 ---
 
-## Glossario rapido
+## Glossary
 
-**SEO** — Search Engine Optimization. Tutto ciò che fa sì che Google trovi e mostri le tue pagine.
+**SEO** — Search Engine Optimization. Everything that makes Google find and surface your pages in traditional search results.
 
-**GEO** — Generative Engine Optimization. Ottimizzare i contenuti per essere citati dalle AI (Google AI Overviews, ChatGPT, Perplexity) invece che solo per comparire nei link tradizionali.
+**GEO** — Generative Engine Optimization. Optimizing content to be cited by AI engines (Google AI Overviews, ChatGPT, Perplexity) instead of just appearing as a link.
 
-**AEO** — Answer Engine Optimization. Ottimizzare per comparire nelle risposte dirette: featured snippet di Google, risposte vocali, box FAQ nei risultati.
+**AEO** — Answer Engine Optimization. Optimizing to appear in direct answers: Google featured snippets, voice search results, AI answer boxes.
 
-**Schema markup / Dati strutturati** — Codice invisibile agli utenti che aiuta Google e le AI a capire il tipo e il significato del contenuto.
+**Schema markup / Structured data** — Code invisible to users that helps Google and AI engines understand the type and meaning of content.
 
-**Canonical** — Tag che dice a Google qual è la versione "ufficiale" di una pagina quando esistono più URL che puntano allo stesso contenuto.
+**Canonical** — A tag that tells Google which is the "official" version of a page when multiple URLs point to the same content.
 
-**robots.txt** — File di testo che dice ai motori di ricerca quali parti del sito possono visitare.
+**robots.txt** — A text file that tells search engine crawlers which parts of the site they can visit.
 
-**Sitemap** — File che elenca tutte le pagine del sito che vuoi far indicizzare a Google.
+**Sitemap** — A file listing all the pages you want Google to index, sent directly as a map of your site.

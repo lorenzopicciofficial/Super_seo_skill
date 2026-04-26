@@ -1,72 +1,56 @@
 ---
 name: seo-schema
 description: >
-  Genera il codice che aiuta Google e le AI a capire esattamente di cosa parla
-  la pagina: che tipo di contenuto è, chi l'ha scritto, qual è il prezzo,
-  le valutazioni, le domande frequenti e molto altro.
-  Usa questa skill quando vuoi che Google mostri informazioni arricchite
-  nei risultati (stelle, prezzi, FAQ, breadcrumb) o quando vuoi aumentare
-  le probabilità di essere citato dalle AI.
-  Si attiva con frasi come: "aggiungi schema markup", "voglio le stelle su Google",
-  "aggiungi i dati strutturati", "FAQ nei risultati di ricerca",
-  "rich snippet", "JSON-LD", "aiuta Google a capire la pagina".
+  Generate JSON-LD structured data that enables rich results on Google and improves AI citation accuracy.
+  Use when the user wants stars, prices, FAQs, breadcrumbs, or author info to appear directly
+  in search results, or wants AI engines to understand page context more precisely.
+  Trigger on: "add schema markup", "I want stars on Google", "add structured data",
+  "FAQ in search results", "rich snippet", "JSON-LD", "breadcrumb markup",
+  "product schema", "article schema", "local business schema", "help Google understand the page".
+argument-hint: "Page type (article, product, FAQ, local business, organization…) and URL or page content"
 ---
 
-# seo-schema — Dati strutturati per Google e AI
+# SEO Schema
 
-Hai ricevuto una richiesta di aggiungere o correggere dati strutturati. Il tuo obiettivo è generare codice JSON-LD corretto, pronto da incollare nel `<head>` della pagina, spiegando in modo semplice a cosa serve ogni blocco.
+Generate correct, ready-to-paste JSON-LD structured data for the appropriate page type.
 
-## Cos'è lo schema markup (spiegazione semplice)
+## Before You Start
 
-È come una scheda informativa che metti nella pagina, scritta in un linguaggio che Google capisce direttamente. Non la vedono gli utenti, ma Google la usa per mostrare informazioni arricchite nei risultati — stelle, prezzi, FAQ, nomi degli autori, date degli eventi — e le AI la usano per capire meglio il contesto della pagina.
+Identify:
+- **Page type** — article, product, FAQ, organization, local business, event, breadcrumb?
+- **What data is already on the page?** — schema must reflect visible content; never add data not present in the page body
+- **Goal** — stars in results? FAQ accordion on Google? Brand knowledge graph? AI citation signal?
 
-## Prima di generare il codice
+## Schema by Page Type
 
-Chiedi o identifica:
-- **Che tipo di pagina è?** (articolo, prodotto, ricetta, servizio, evento, persona, azienda, FAQ, corso…)
-- **Quali informazioni sono già presenti nella pagina?** (inutile mettere un prezzo nello schema se non è nella pagina)
-- **Qual è l'obiettivo?** (stelle nei risultati? Comparire nelle FAQ di Google? Essere citato come fonte affidabile?)
-
-## Tipi di schema per caso d'uso
-
-### Articolo o blog post
-Quando usarlo: qualsiasi pagina con contenuto editoriale (articoli, guide, news)
-Cosa abilita: mostra autore, data, immagine nei risultati Google News e Discover
-
+### Article / Blog Post
+Enables: author, date, image in Google News and Discover.
 ```json
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Titolo dell'articolo",
-  "author": {
-    "@type": "Person",
-    "name": "Nome Autore"
-  },
-  "datePublished": "2026-01-15",
-  "dateModified": "2026-04-20",
-  "image": "https://esempio.com/immagine.jpg",
+  "headline": "Article title",
+  "author": { "@type": "Person", "name": "Author Name" },
+  "datePublished": "YYYY-MM-DD",
+  "dateModified": "YYYY-MM-DD",
+  "image": "https://example.com/image.jpg",
   "publisher": {
     "@type": "Organization",
-    "name": "Nome Sito",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://esempio.com/logo.png"
-    }
+    "name": "Site Name",
+    "logo": { "@type": "ImageObject", "url": "https://example.com/logo.png" }
   }
 }
 ```
 
-### Prodotto (e-commerce)
-Quando usarlo: pagine prodotto con prezzo e disponibilità
-Cosa abilita: prezzo, disponibilità e stelle nei risultati di ricerca
-
+### Product
+Enables: price, availability, star ratings in search results.
 ```json
 {
   "@context": "https://schema.org",
   "@type": "Product",
-  "name": "Nome Prodotto",
-  "description": "Descrizione breve",
-  "image": "https://esempio.com/prodotto.jpg",
+  "name": "Product Name",
+  "description": "Short description",
+  "image": "https://example.com/product.jpg",
   "offers": {
     "@type": "Offer",
     "price": "29.99",
@@ -82,9 +66,7 @@ Cosa abilita: prezzo, disponibilità e stelle nei risultati di ricerca
 ```
 
 ### FAQ
-Quando usarlo: pagine con domande e risposte (assistenza, prodotti, servizi)
-Cosa abilita: le domande compaiono direttamente nei risultati di ricerca e vengono usate dalle AI per rispondere
-
+Enables: questions displayed directly in Google results. High GEO/AEO value — AI engines use FAQ schema as an authoritative Q&A signal.
 ```json
 {
   "@context": "https://schema.org",
@@ -92,105 +74,78 @@ Cosa abilita: le domande compaiono direttamente nei risultati di ricerca e vengo
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Domanda uno?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Risposta chiara e completa alla domanda uno."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Domanda due?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Risposta chiara e completa alla domanda due."
-      }
+      "name": "Question text?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Complete, self-contained answer." }
     }
   ]
 }
 ```
 
-### Organizzazione / Azienda
-Quando usarlo: homepage o pagina "Chi siamo"
-Cosa abilita: aiuta Google a costruire il Knowledge Graph del brand, aumenta la citabilità dalle AI
-
+### Organization
+Enables: brand Knowledge Graph, improves AI citation trustworthiness.
 ```json
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Nome Azienda",
-  "url": "https://esempio.com",
-  "logo": "https://esempio.com/logo.png",
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+39-000-0000000",
-    "contactType": "customer service"
-  },
-  "sameAs": [
-    "https://www.linkedin.com/company/nome",
-    "https://www.instagram.com/nome"
-  ]
+  "name": "Company Name",
+  "url": "https://example.com",
+  "logo": "https://example.com/logo.png",
+  "sameAs": ["https://linkedin.com/company/name", "https://instagram.com/name"]
 }
 ```
 
-### Servizio locale (negozio, studio, ristorante)
-Quando usarlo: attività fisiche con indirizzo e orari
-Cosa abilita: comparire in Google Maps, risultati locali, risposte vocali
-
+### Local Business
+Enables: Google Maps, local pack, voice search answers.
 ```json
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "Nome Attività",
+  "name": "Business Name",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Via Roma 1",
-    "addressLocality": "Milano",
-    "postalCode": "20100",
+    "streetAddress": "123 Main St",
+    "addressLocality": "City",
+    "postalCode": "00000",
     "addressCountry": "IT"
   },
-  "telephone": "+39-02-0000000",
+  "telephone": "+39-00-0000000",
   "openingHours": "Mo-Fr 09:00-18:00",
-  "url": "https://esempio.com"
+  "url": "https://example.com"
 }
 ```
 
-### Breadcrumb (percorso di navigazione)
-Quando usarlo: sempre, su qualsiasi sito con più livelli di navigazione
-Cosa abilita: mostra il percorso (Home > Categoria > Pagina) nei risultati Google
-
+### Breadcrumb
+Enables: navigation path shown in search results. Use on every page with multi-level navigation.
 ```json
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://esempio.com"},
-    {"@type": "ListItem", "position": 2, "name": "Categoria", "item": "https://esempio.com/categoria"},
-    {"@type": "ListItem", "position": 3, "name": "Pagina attuale", "item": "https://esempio.com/categoria/pagina"}
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://example.com" },
+    { "@type": "ListItem", "position": 2, "name": "Category", "item": "https://example.com/category" },
+    { "@type": "ListItem", "position": 3, "name": "Current Page", "item": "https://example.com/category/page" }
   ]
 }
 ```
 
-## Come inserire il codice nella pagina
+## How to Insert
 
-Il codice JSON-LD va sempre dentro un tag `<script>` nel `<head>` della pagina:
-
+Always inside a `<script>` tag in the `<head>`:
 ```html
-<head>
-  ...
-  <script type="application/ld+json">
-  { ...il codice generato... }
-  </script>
-</head>
+<script type="application/ld+json">
+{ ...generated JSON-LD... }
+</script>
 ```
 
-Si possono inserire più blocchi separati — uno per tipo — nella stessa pagina.
+Multiple blocks on the same page are fine — one per type.
 
-## Come presentare il risultato
+## Output Format
 
-1. Spiega in una riga cosa abilita lo schema che stai generando
-2. Fornisci il codice completo, già compilato con i dati della pagina
-3. Indica dove incollarlo
-4. Se ci sono dati mancanti che andrebbero aggiunti anche nel testo della pagina (es. il prezzo c'è nello schema ma non nella pagina), segnalalo — Google penalizza le incoerenze
+1. One-line explanation of what the generated schema enables
+2. Full JSON-LD block, values filled from the actual page content
+3. Insertion instruction
+4. Flag any data present in the schema but missing from the visible page body (Google penalizes mismatches)
 
-Suggerisci `/seo-fix` se l'utente vuole applicare il codice direttamente ai file del progetto.
+## Handoff
+
+Apply to project files → suggest `/seo-fix`

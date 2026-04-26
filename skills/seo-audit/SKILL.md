@@ -1,88 +1,86 @@
 ---
 name: seo-audit
 description: >
-  Analizza una pagina web o un sito intero e produce un report chiaro
-  con i problemi trovati e le priorità di intervento.
-  Usa questa skill quando vuoi capire perché una pagina non si posiziona bene,
-  cosa ostacola la visibilità su Google, o quando vuoi un punto di partenza
-  prima di ottimizzare qualcosa.
-  Si attiva con frasi come: "analizza questa pagina", "audit SEO di",
-  "perché questo sito non va su Google", "cosa non va con il posizionamento",
-  "controlla la visibilità di", "fammi un'analisi SEO".
+  Analyze a web page or entire site and produce a prioritized report of SEO issues.
+  Use when the user wants to understand why a page isn't ranking, needs a starting point
+  before optimizing, or wants a full visibility check.
+  Trigger on: "analyze this page", "SEO audit", "why isn't this site on Google",
+  "what's wrong with my ranking", "check visibility", "audit this URL",
+  "what should I fix first for SEO".
+  Do NOT trigger for content rewriting (use seo-content) or code fixes (use seo-fix).
+argument-hint: "URL or paste the HTML source of the page to analyze"
 ---
 
-# seo-audit — Analisi SEO completa
+# SEO Audit
 
-Hai ricevuto una richiesta di analisi SEO. Il tuo obiettivo è produrre un report chiaro, concreto e facile da leggere — non un documento tecnico, ma una guida pratica su cosa sistemare e perché.
+Produce a clear, prioritized report — not a technical document, but a practical guide on what to fix and why.
 
-## Come lavorare
+## Before You Start
 
-### 1. Capisci il contesto prima di tutto
-Prima di analizzare, chiediti (o chiedi all'utente):
-- È una singola pagina o un intero sito?
-- C'è una parola chiave o un argomento principale su cui si vuole posizionare?
-- Il sito è già online o è in fase di sviluppo?
+Identify:
+- Single page or full site?
+- Target keyword or topic? (ask if not provided)
+- Is the site live or under development?
 
-Se hai accesso al codice HTML/sorgente della pagina, analizza quello direttamente.
-Se hai solo l'URL, descrivi cosa analizzeresti e cosa richiederebbe strumenti esterni.
+If HTML source is available, analyze it directly. If only a URL is given, describe what you would check and flag what requires external tools (Google Search Console, PageSpeed Insights).
 
-### 2. Cosa controllare
+## What to Check
 
-**Visibilità su Google (SEO tradizionale)**
-- Il titolo della pagina (tag `<title>`) è descrittivo, lungo 50-60 caratteri, contiene la parola chiave principale?
-- La descrizione (meta description) è presente, invoglia al clic, è lunga 150-160 caratteri?
-- I titoli interni (H1, H2, H3) sono usati in modo logico e descrivono il contenuto?
-- Le immagini hanno il testo alternativo (attributo `alt`) compilato?
-- I link interni al sito sono presenti e sensati?
-- L'URL è leggibile e descrittivo?
+**Indexing blockers — check first**
+- `robots.txt`: does it contain `Disallow: /`? If so, flag as critical.
+- `<meta name="robots" content="noindex">` on important pages?
+- `<link rel="canonical">`: present, correct, not pointing to a different URL?
 
-**Visibilità sulle AI — Google AI Overviews, ChatGPT, Perplexity (GEO)**
-- Il contenuto risponde direttamente a domande concrete? Le AI citano pagine che danno risposte nette.
-- Ci sono frasi brevi e autonome che si possono estrarre e citare?
-- L'autore o il brand è riconoscibile e presente nella pagina?
-- Ci sono dati, statistiche o affermazioni verificabili?
+**On-page essentials**
+- `<title>`: 50–60 chars, target keyword near the start, unique per page?
+- `<meta name="description">`: 150–160 chars, present, click-worthy?
+- One `<h1>` per page containing the main keyword?
+- `<h2>`/`<h3>` used logically to structure content?
+- Images: `alt` attribute present and descriptive on all `<img>` tags?
+- Internal links: present and using descriptive anchor text?
+- URL: readable and descriptive?
 
-**Visibilità nelle risposte veloci — featured snippet, voice search (AEO)**
-- Il contenuto include definizioni chiare ("Cos'è X: …")?
-- Ci sono liste o tabelle che rispondono a domande del tipo "Come fare X" o "Quali sono i migliori Y"?
-- Le domande frequenti (FAQ) sono presenti e ben formulate?
+**GEO signals** (Google AI Overviews, ChatGPT, Perplexity)
+- Does the content answer questions directly in the first paragraph?
+- Are there concrete, citable statements (statistics, clear definitions)?
+- Is an author or brand name present on the page?
 
-**Aspetti tecnici base**
-- La pagina ha il tag canonical? Punta a sé stessa o a un'altra URL?
-- Ci sono tag robots che potrebbero bloccare l'indicizzazione?
-- La pagina carica velocemente? (Valuta da eventuali segnali nel codice)
-- Il sito è mobile-friendly? (Valuta dai meta viewport e dai CSS)
+**AEO signals** (featured snippets, voice search)
+- Explicit definitions ("X is…")?
+- Numbered lists or step-by-step instructions?
+- FAQ section with real user questions?
 
-### 3. Come presentare il report
+**Technical baseline**
+- `<meta name="viewport">` present (mobile-friendly)?
+- Scripts loaded with `defer` or `async`?
+- Images have explicit `width`/`height` attributes?
 
-Usa questo formato — senza tecnicismi, come se spiegassi a qualcuno che non è sviluppatore:
+## Output Format
 
----
-**Cosa hai** — una riga che riassume lo stato attuale
+```
+Summary — one sentence on overall state
 
-**Priorità alta** (sistemi subito)
-- [problema] → [perché conta] → [cosa fare]
+HIGH PRIORITY (fix immediately)
+- [issue] → [why it matters] → [what to do]
 
-**Priorità media** (sistemi nelle prossime settimane)
-- [problema] → [perché conta] → [cosa fare]
+MEDIUM PRIORITY (fix this week)
+- [issue] → [why it matters] → [what to do]
 
-**Priorità bassa** (miglioramenti futuri)
-- [problema] → [perché conta] → [cosa fare]
+LOW PRIORITY (future improvements)
+- [issue] → [why it matters] → [what to do]
 
-**Punti di forza** — cosa già funziona bene
+What's already working
+- [strength 1]
+- [strength 2]
 
-**Prossimo passo consigliato** — una sola azione concreta da fare oggi
----
+Recommended next step — one concrete action to take today
+```
 
-### 4. Tono e linguaggio
-- Spiega ogni problema come se l'utente non sapesse cos'è un "canonical" o un "H1"
-- Usa analogie semplici quando servono ("Il titolo è come il nome di un negozio: se non si capisce cosa vendi, la gente passa oltre")
-- Non elencare problemi senza spiegare l'impatto reale
-- Se qualcosa richiede strumenti esterni che non hai (Google Search Console, PageSpeed), dillo chiaramente e spiega cosa andare a controllare
+Avoid jargon in the report. Use plain analogies where helpful.
 
-### 5. Alla fine dell'analisi
-Proponi sempre il passo successivo logico:
-- Se ci sono problemi di testo → suggerisci `/seo-content`
-- Se ci sono problemi tecnici → suggerisci `/seo-technical`
-- Se mancano dati strutturati → suggerisci `/seo-schema`
-- Se l'utente vuole applicare le correzioni direttamente → suggerisci `/seo-fix`
+## Handoff
+
+- Text issues → suggest `/seo-content`
+- Technical issues → suggest `/seo-technical`
+- Missing structured data → suggest `/seo-schema`
+- Ready to apply fixes → suggest `/seo-fix`

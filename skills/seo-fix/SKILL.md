@@ -1,68 +1,71 @@
 ---
 name: seo-fix
 description: >
-  Applica concretamente le correzioni SEO ai file del progetto:
-  modifica il codice HTML, aggiunge o corregge meta tag, inserisce
-  dati strutturati, aggiorna robots.txt e sitemap.
-  Usa questa skill dopo aver fatto un'analisi con seo-audit,
-  oppure quando sai già cosa correggere e vuoi che venga fatto direttamente.
-  Si attiva con frasi come: "applica le correzioni SEO", "correggi il codice",
-  "aggiungi i meta tag mancanti", "sistema il canonical",
-  "implementa le modifiche", "aggiorna il robots.txt", "applica l'audit".
+  Apply SEO corrections directly to project files: add or fix meta tags, canonicals,
+  structured data, robots.txt, and sitemap. Does not give instructions — makes the changes.
+  Use after seo-audit to implement findings, or when the user knows what to fix
+  and wants it done directly in the code.
+  Trigger on: "apply the SEO fixes", "add the missing meta tags", "fix the canonical",
+  "implement the audit corrections", "update robots.txt", "add JSON-LD to the page",
+  "insert the structured data", "apply SEO changes to the project".
+argument-hint: "Paste the audit report or describe fixes to apply; optionally paste the HTML files to modify"
 ---
 
-# seo-fix — Applica le correzioni SEO
+# SEO Fix
 
-Hai ricevuto una richiesta di applicare correzioni SEO. Il tuo obiettivo è modificare direttamente i file del progetto — non dare istruzioni, ma fare le modifiche concrete e mostrare cosa è cambiato.
+Edit project files to implement SEO corrections. Produce diffs and ready-to-use code — not instructions.
 
-## Prima di iniziare
+## Before You Start
 
-Identifica sempre:
-1. **Cosa correggere** — hai già un report da `/seo-audit`? Usa quello. Altrimenti chiedi cosa va sistemato.
-2. **Dove sono i file** — esplora la struttura del progetto per trovare HTML, template, configurazioni.
-3. **Che tecnologia usa il sito** — HTML statico, Next.js, WordPress, altro? Cambia dove e come fare le modifiche.
+1. Identify what to fix — use an existing `/seo-audit` report if available, or ask
+2. Locate the files — explore the project structure to find HTML templates, config files, and layouts
+3. Identify the technology — static HTML, Next.js, Nuxt, WordPress, other? This determines where and how to apply each change
 
-## Ordine di priorità
+## Fix Priority Order
 
-Applica le correzioni in quest'ordine:
+Apply in this sequence:
 
-### 1. Blocchi all'indicizzazione (risolvi prima di tutto il resto)
-Se trovi `noindex` su pagine importanti o `Disallow: /` nel robots.txt, sistemali subito — tutto il resto è inutile finché Google non riesce ad entrare.
+### 1. Indexing blockers (always first)
+- Remove `noindex` from public pages
+- Fix `Disallow: /` in `robots.txt` that blocks the whole site
 
-### 2. Tag essenziali su ogni pagina
-Per ogni pagina HTML controlla e aggiungi/correggi questi tag nel `<head>`:
+### 2. Essential head tags (every page)
 
+Add to `<head>` where missing or incorrect:
 ```html
-<!-- Titolo: 50-60 caratteri, parola chiave all'inizio -->
-<title>Parola Chiave - Descrizione Breve | Brand</title>
+<!-- Title: 50–60 chars, keyword first -->
+<title>Target Keyword - Brief Description | Brand</title>
 
-<!-- Descrizione: 150-160 caratteri, invoglia al clic -->
-<meta name="description" content="Descrizione che convince l'utente a cliccare, con la parola chiave inclusa in modo naturale.">
+<!-- Meta description: 150–160 chars, click-worthy -->
+<meta name="description" content="Description that earns the click, with keyword included naturally.">
 
-<!-- Canonical: punta sempre all'URL ufficiale della pagina -->
-<link rel="canonical" href="https://esempio.com/pagina">
+<!-- Canonical: always points to the official URL of this page -->
+<link rel="canonical" href="https://example.com/page">
 
-<!-- Viewport mobile (se mancante) -->
+<!-- Viewport (if missing) -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Open Graph per social e AI (se mancanti) -->
-<meta property="og:title" content="Titolo della pagina">
-<meta property="og:description" content="Descrizione per social e AI">
-<meta property="og:image" content="https://esempio.com/immagine.jpg">
-<meta property="og:url" content="https://esempio.com/pagina">
+<!-- Open Graph (if missing) -->
+<meta property="og:title" content="Page title">
+<meta property="og:description" content="Description for social and AI">
+<meta property="og:image" content="https://example.com/image.jpg">
+<meta property="og:url" content="https://example.com/page">
 ```
 
-### 3. Struttura dei contenuti
-- Verifica che ogni pagina abbia un solo `<h1>` con la parola chiave principale
-- Controlla che i titoli di sezione (`<h2>`, `<h3>`) siano presenti e descrittivi
-- Aggiungi `alt` alle immagini che ne sono prive: `<img src="foto.jpg" alt="descrizione significativa">`
+### 3. Content structure
+- Ensure one `<h1>` per page with the main keyword
+- Add `alt` attributes to images missing them: `<img src="img.jpg" alt="descriptive text">`
 
-### 4. Dati strutturati (JSON-LD)
-Se nel report mancano dati strutturati, inserisci il blocco `<script type="application/ld+json">` appropriato. Usa `/seo-schema` per generarli se non li hai già.
+### 4. Structured data (JSON-LD)
+Insert inside `<head>` after generating with `/seo-schema`:
+```html
+<script type="application/ld+json">
+{ ...schema... }
+</script>
+```
 
 ### 5. robots.txt
-Se il file non esiste o è mal configurato, crealo o correggilo:
-
+Create or fix at site root:
 ```
 User-agent: *
 Disallow: /admin/
@@ -70,45 +73,38 @@ Disallow: /login/
 Disallow: /checkout/
 Allow: /
 
-Sitemap: https://tuosito.com/sitemap.xml
+Sitemap: https://example.com/sitemap.xml
 ```
 
 ### 6. sitemap.xml
-Se manca o è obsoleta, generala includendo tutte le pagine pubbliche con `<lastmod>` aggiornato. Escludi pagine con `noindex`, carrello, login, admin.
+Generate or update including all public pages with current `<lastmod>`. Exclude `noindex` pages, admin, login, cart.
 
-### 7. Ottimizzazioni performance
-Applica solo se richiesto o se l'impatto è chiaramente alto:
-- Aggiungi `defer` agli script non critici
-- Aggiungi `width` e `height` alle immagini principali
-- Aggiungi `preconnect` per risorse esterne (Google Fonts, CDN)
+### 7. Performance (only if impact is clear)
+```html
+<!-- Non-blocking scripts -->
+<script src="script.js" defer></script>
 
-## Come presentare le modifiche
+<!-- Images with explicit dimensions -->
+<img src="photo.jpg" width="800" height="600" alt="description">
 
-Per ogni file modificato:
-1. Mostra le righe cambiate con una riga di spiegazione
-2. Fornisci il file completo o il blocco modificato pronto da incollare
-3. Se la modifica richiede azioni esterne (inviare la sitemap a Google Search Console, testare un URL con Google), indicalo chiaramente
-
-**Formato diff preferito:**
-```
-File: index.html
-Modifica: aggiunto tag title e meta description mancanti
-
-Prima:
-  <head>
-    <meta charset="UTF-8">
-  </head>
-
-Dopo:
-  <head>
-    <meta charset="UTF-8">
-    <title>Nome Prodotto - Acquista Online | Brand</title>
-    <meta name="description" content="...">
-    <link rel="canonical" href="https://esempio.com/prodotto">
-  </head>
+<!-- Preconnect for external resources -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
 ```
 
-## Alla fine
+## Output Format
 
-Riepiloga in 3-5 punti cosa hai fatto, con una riga per ciascuno.
-Se ci sono correzioni che non puoi applicare direttamente (es. configurazione server, Google Search Console), elencale come "Da fare manualmente" con istruzioni precise.
+For each modified file:
+```
+File: path/to/file.html
+Change: [one-line description]
+
+Before:
+  [original snippet]
+
+After:
+  [modified snippet]
+```
+
+End with a 3–5 point summary of what was changed.
+
+List any fixes that require external action (Google Search Console submission, server configuration) under **Manual steps required** with precise instructions.

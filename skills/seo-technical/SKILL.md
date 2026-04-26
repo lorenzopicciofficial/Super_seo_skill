@@ -1,164 +1,121 @@
 ---
 name: seo-technical
 description: >
-  Individua e corregge i problemi tecnici che impediscono a Google
-  di trovare, leggere e indicizzare correttamente le pagine del sito.
-  Usa questa skill quando il sito non compare su Google nonostante
-  i contenuti siano buoni, quando vuoi verificare che tutto sia
-  configurato correttamente, o quando hai appena lanciato un sito nuovo.
-  Si attiva con frasi come: "il sito non si indicizza", "controlla il robots.txt",
-  "ottimizza la sitemap", "canonical non funziona", "meta robots",
-  "redirect 301", "problemi tecnici SEO", "il sito non appare su Google".
+  Find and fix technical issues that prevent Google from crawling, reading, or indexing pages correctly.
+  Use when the site doesn't appear on Google despite good content, after launching a new site,
+  or when verifying that indexing configuration is correct.
+  Trigger on: "site not indexed", "check robots.txt", "fix sitemap", "canonical not working",
+  "meta robots", "301 redirect", "technical SEO issues", "site doesn't appear on Google",
+  "indexing problem", "crawl error", "noindex", "mobile SEO", "Core Web Vitals".
+  Do NOT trigger for content optimization (use seo-content) or applying code changes (use seo-fix).
+argument-hint: "URL, paste robots.txt/sitemap content, or paste the HTML source to inspect"
 ---
 
-# seo-technical — Problemi tecnici di indicizzazione
+# SEO Technical
 
-Hai ricevuto una richiesta di analisi o correzione tecnica SEO. Il tuo obiettivo è individuare e risolvere i problemi che impediscono a Google di trovare e capire le pagine — spiegando ogni problema in modo comprensibile, senza dare per scontata la conoscenza tecnica.
+Identify and resolve technical issues that block Google from finding and understanding pages.
 
-## I problemi tecnici più comuni
+## Priority Order
 
-### 1. Il sito dice a Google di non entrare (robots.txt)
-Il file `robots.txt` è come un cartello all'ingresso del sito che dice ai motori di ricerca cosa possono visitare.
+Always resolve blockers first — everything else is irrelevant if Google can't get in.
 
-**Cosa controllare:**
+### 1. Indexing blockers (fix before anything else)
+
+**robots.txt**
+Disallowing everything is a common mistake left over from development:
 ```
+# WRONG — blocks entire site
 User-agent: *
 Disallow: /
-```
-Se trovi `Disallow: /` senza limitazioni, significa che stai dicendo a Google di non indicizzare nulla — un errore gravissimo spesso fatto per sbaglio durante lo sviluppo e dimenticato in produzione.
 
-**Configurazione corretta per un sito normale:**
-```
+# CORRECT — block only private sections
 User-agent: *
 Disallow: /admin/
 Disallow: /login/
 Disallow: /checkout/
-
-Sitemap: https://esempio.com/sitemap.xml
+Allow: /
+Sitemap: https://example.com/sitemap.xml
 ```
 
-Blocca solo le sezioni che non vuoi su Google (admin, login, pagine interne). Tutto il resto deve essere accessibile.
-
----
-
-### 2. Le pagine si escludono da sole (meta robots)
-Dentro il `<head>` di ogni pagina può esserci un tag che dice a Google di non indicizzarla.
-
-**Da cercare:**
+**Meta robots noindex**
+Check `<head>` for:
 ```html
 <meta name="robots" content="noindex, nofollow">
 ```
-
-`noindex` = Google non mostra questa pagina nei risultati
-`nofollow` = Google non segue i link in questa pagina
-
-**Quando usarlo** (solo in questi casi):
-- Pagine di conferma ordine, pagina carrello, area riservata
-- Pagine duplicate intenzionali
-- Pagine di test o staging
-
-**Quando NON usarlo:** mai su homepage, pagine prodotto, articoli, pagine categoria.
+`noindex` = page excluded from all results. Only acceptable on: checkout, login, account pages, staging. Flag on any public page as critical.
 
 ---
 
-### 3. Pagine duplicate senza indicazione di quale preferire (canonical)
-Se la stessa pagina è raggiungibile da più URL diversi, Google non sa quale indicizzare e disperde il "peso" tra tutte.
+### 2. Duplicate content (canonical)
 
-Esempi di duplicati tipici:
-- `https://esempio.com/prodotto` e `https://esempio.com/prodotto?ref=newsletter`
-- `https://esempio.com` e `https://www.esempio.com`
-- `http://esempio.com` e `https://esempio.com`
+If the same page is reachable from multiple URLs, Google splits ranking authority between them.
+Common duplicates: `?utm_source=`, `?ref=`, `http` vs `https`, `www` vs non-`www`.
 
-**La soluzione — tag canonical:**
+Fix — add to `<head>` on every page:
 ```html
-<link rel="canonical" href="https://esempio.com/prodotto">
+<link rel="canonical" href="https://example.com/the-official-url">
 ```
-
-Va inserito nel `<head>` di ogni pagina, punta sempre alla versione "ufficiale" dell'URL.
+Always points to the single preferred version of the page.
 
 ---
 
-### 4. La mappa del sito non esiste o non è aggiornata (sitemap XML)
-La sitemap è un file che elenca tutte le pagine del sito che vuoi su Google — come un indice che gli mandi direttamente.
+### 3. Sitemap
 
-**Dove deve stare:** `https://tuosito.com/sitemap.xml`
+The sitemap is the index you send directly to Google. It must exist and be linked from `robots.txt`.
 
-**Struttura base:**
+Location: `https://example.com/sitemap.xml`
+
+Minimal structure:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://esempio.com/</loc>
+    <loc>https://example.com/</loc>
     <lastmod>2026-04-01</lastmod>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://esempio.com/chi-siamo</loc>
-    <lastmod>2026-03-15</lastmod>
-    <priority>0.8</priority>
   </url>
 </urlset>
 ```
 
-**Cosa NON includere:** pagine con `noindex`, pagine di errore, pagine di amministrazione.
-
-**Come dirlo a Google:** aggiungi questa riga nel `robots.txt`:
-```
-Sitemap: https://esempio.com/sitemap.xml
-```
+Exclude: `noindex` pages, admin, login, cart, error pages.
 
 ---
 
-### 5. Il sito non va bene su mobile (mobile-friendliness)
-Google indicizza prima la versione mobile del sito. Se non è ottimizzata, penalizza anche i risultati su desktop.
+### 4. Mobile-friendliness
 
-**Controllo base nel `<head>`:**
+Google indexes the mobile version first. Check `<head>`:
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ```
-
-Se questo meta tag manca, il sito probabilmente non è ottimizzato per mobile.
-
-Segnala se manca e suggerisci di testare con lo strumento Google Mobile-Friendly Test.
+If missing, flag as high priority.
 
 ---
 
-### 6. Redirect errati o catene di redirect
-Un redirect 301 dice a Google "questa pagina si è spostata definitivamente qui". Va bene.
-Una catena di redirect (A → B → C → D) rallenta la scansione e può disperdere autorità.
+### 5. Redirect chains
 
-**Come identificarla:** se analizzando il codice trovi redirect annidati o multipli, segnalalo.
-
-**Regola:** ogni URL deve portare direttamente alla destinazione finale, senza passaggi intermedi.
+A single 301 redirect is fine. Chains (A → B → C) dilute crawl budget and ranking signals.
+If found: flag each chain and provide the direct mapping from source to final destination.
 
 ---
 
-### 7. Pagine lente (Core Web Vitals)
-Google penalizza i siti lenti, specialmente su mobile. I segnali da cercare nel codice:
-- Immagini senza attributo `width` e `height` (causano spostamento del layout)
-- JavaScript che blocca il caricamento (script senza `async` o `defer`)
-- Immagini troppo grandi (non ottimizzate in formato WebP/AVIF)
-- Font caricati da Google Fonts senza `preconnect`
+### 6. Core Web Vitals signals
 
-**Fix rapidi da applicare:**
-```html
-<!-- Preconnect per Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
+Look for common performance issues in the code:
 
-<!-- Script non bloccanti -->
-<script src="script.js" defer></script>
+| Issue | Fix |
+|-------|-----|
+| Images without `width`/`height` | Add explicit dimensions to prevent layout shift |
+| Render-blocking scripts | Add `defer` or `async` to `<script>` tags |
+| No `preconnect` for external fonts | Add `<link rel="preconnect" href="https://fonts.googleapis.com">` |
+| Large unoptimized images | Recommend WebP/AVIF conversion |
 
-<!-- Immagini con dimensioni esplicite -->
-<img src="foto.jpg" width="800" height="600" alt="descrizione">
-```
+## Output Format
 
----
+For each issue found:
+1. **What it is** — plain description
+2. **Why it matters** — concrete impact on indexing or ranking
+3. **How to fix it** — exact code or configuration change
 
-## Come presentare il risultato
+## Handoff
 
-Per ogni problema trovato:
-1. **Cosa c'è** — descrivi il problema in modo semplice
-2. **Perché è un problema** — l'impatto concreto sull'indicizzazione
-3. **Come sistemarlo** — codice o istruzione precisa
-
-Alla fine proponi `/seo-fix` per applicare le correzioni direttamente ai file del progetto.
+Apply fixes to project files → suggest `/seo-fix`

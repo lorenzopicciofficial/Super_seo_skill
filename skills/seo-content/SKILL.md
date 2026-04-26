@@ -1,84 +1,80 @@
 ---
 name: seo-content
 description: >
-  Ottimizza i testi di una pagina per essere trovati su Google
-  e per essere citati dalle AI come ChatGPT, Perplexity e Google AI Overviews.
-  Usa questa skill quando vuoi migliorare un articolo, una pagina prodotto,
-  una homepage o qualsiasi testo che deve portare traffico.
-  Si attiva con frasi come: "ottimizza questo testo per SEO", "riscrivi per Google",
-  "voglio che questa pagina venga citata dalle AI", "migliora il contenuto",
-  "rendi questo articolo più visibile", "ottimizza per AI Overviews".
+  Optimize page text for Google rankings and AI citation (GEO/AEO).
+  Use when the user wants to improve an article, product page, homepage, or any text
+  that needs to drive organic traffic or be cited by AI engines.
+  Trigger on: "optimize this text for SEO", "rewrite for Google", "make this rank for [keyword]",
+  "I want to appear in AI Overviews", "optimize for ChatGPT/Perplexity citations",
+  "improve this article", "make this content rank", "add an FAQ section",
+  "optimize for featured snippets", "GEO", "AEO".
+  Also trigger when creating new content from scratch that must be SEO-optimized.
+argument-hint: "Paste the text to optimize, or describe the page topic and target keyword"
 ---
 
-# seo-content — Ottimizzazione testi per Google e AI
+# SEO Content
 
-Hai ricevuto un testo da ottimizzare. Il tuo obiettivo è renderlo più visibile su Google (SEO), più citabile dalle AI come ChatGPT, Perplexity e Google AI Overviews (GEO), e più adatto a comparire nelle risposte rapide e vocali (AEO).
+Optimize existing text or write new content that ranks on Google and gets cited by AI engines (GEO) and answer engines (AEO).
 
-## Prima di iniziare
+## Before You Start
 
-Chiedi o individua:
-- Qual è l'argomento principale della pagina?
-- A chi si rivolge? (cliente finale, professionista, studente…)
-- C'è una parola chiave specifica su cui vuole posizionarsi?
-- Il testo è già scritto e va ottimizzato, oppure va scritto da zero?
+Identify:
+- Target keyword / main topic
+- Audience (end consumer, professional, student…)
+- Existing text to optimize, or new content to write from scratch?
 
-Se il testo è già scritto, analizzalo prima di modificarlo. Se manca, chiedi indicazioni sull'argomento e producilo direttamente ottimizzato.
+If writing from scratch, ask for the topic and keyword first, then produce directly in optimized form.
 
-## Cosa ottimizzare e come
+## Optimization Rules
 
-### Titolo della pagina (tag `<title>`)
-- Deve contenere la parola chiave principale, possibilmente all'inizio
-- Lunghezza ideale: 50-60 caratteri
-- Deve invogliare al clic, non solo descrivere ("Come fare X in 5 minuti" funziona meglio di "Guida a X")
-- Ogni pagina ha il suo titolo unico — mai duplicare
+### Title tag
+- Target keyword first, 50–60 chars max
+- Action-oriented beats descriptive: "How to X in 5 Steps" > "Guide to X"
+- Unique per page — never duplicate across the site
 
-### Intestazione principale (H1)
-- Una sola per pagina
-- Simile al titolo ma può essere leggermente più lunga e descrittiva
-- Deve chiarire immediatamente di cosa parla la pagina
+### H1
+- One per page, mirrors (not duplicates) the title
+- Must make the page topic unmistakably clear
 
-### Struttura del testo (H2, H3)
-- Usa i sottotitoli per dividere l'argomento in sezioni logiche
-- I titoli di sezione devono essere descrittivi, non generici ("Come funziona il rimborso" è meglio di "Maggiori informazioni")
-- Le AI usano questi titoli per capire la struttura — rendili autonomi e chiari
+### Headings (H2/H3)
+- Divide content into logical sections with descriptive headings
+- Each heading should be self-explanatory out of context (AI engines use them to build page structure)
 
-### Corpo del testo — regole base
-- La parola chiave principale deve comparire nei primi 100 parole
-- Non ripetere la stessa parola ossessivamente — usa sinonimi e varianti naturali
-- Frasi brevi funzionano meglio (max 20-25 parole)
-- Paragrafi corti (3-4 righe max) — i muri di testo scoraggiano la lettura e penalizzano il ranking
+### Body text
+- Target keyword in the first 100 words
+- Use natural synonyms and variants — avoid keyword stuffing
+- Sentences: 20–25 words max; paragraphs: 3–4 lines max
+- Lead with the answer, then explain: "Yes, it works this way. Here's why…"
 
-### Per essere citati dalle AI (GEO — Generative Engine Optimization)
-Le AI citano contenuti che:
-- Rispondono direttamente a una domanda nel primo paragrafo
-- Contengono affermazioni nette e verificabili ("Il 73% degli utenti…", "La risposta è…")
-- Hanno un autore o un brand riconoscibile menzionato nel testo
-- Usano frasi autonome che si possono estrarre senza perdere senso
+### GEO — Generative Engine Optimization
+AI engines (Google AI Overviews, ChatGPT, Perplexity) cite content that:
+- Gives a direct answer in the opening paragraph
+- Contains citable, standalone statements: specific numbers, clear definitions, verifiable claims
+- Names an author or recognizable brand
+- Has sections that make sense when extracted out of context
 
-Concretamente:
-- Inizia ogni sezione con la risposta, poi spiega ("Sì, funziona così. Ecco perché…")
-- Includi almeno una statistica o dato concreto per sezione
-- Aggiungi una sezione "In breve" o "Risposta rapida" all'inizio dell'articolo
+Required for GEO citability:
+- At least one statistic or concrete data point per section
+- A "Quick answer" or "TL;DR" block at the top
 
-### Per comparire nelle risposte rapide (AEO — Answer Engine Optimization)
-- Includi una definizione esplicita dell'argomento principale ("X è…" oppure "Con X si intende…")
-- Aggiungi una sezione FAQ con domande reali che le persone cercano
-- Usa liste numerate per spiegare processi ("Come fare X in N passi")
-- Usa tabelle comparative quando confronti opzioni
+### AEO — Answer Engine Optimization
+For featured snippets, voice search, and AI answer boxes:
+- Explicit definition: "X is…" or "By X we mean…"
+- FAQ section with questions phrased as real users type them
+- Numbered lists for processes ("How to do X in N steps")
+- Comparison tables when evaluating options
 
 ### Meta description
-- Non influenza direttamente il ranking ma determina se qualcuno clicca
-- Deve riassumere il valore della pagina in 150-160 caratteri
-- Scrivi come se stessi convincendo qualcuno a leggere, non come se compilassi un modulo
+- 150–160 chars, sell the click — not a summary, a pitch
+- Include the target keyword naturally
 
-## Come presentare il risultato
+## Output Format
 
-Se ottimizzi un testo esistente:
-1. Mostra prima le modifiche principali con una breve spiegazione del perché
-2. Poi fornisci il testo completo ottimizzato, pronto da usare
+**For existing text:** show key changes with a one-line rationale for each, then provide the full optimized text ready to use.
 
-Se scrivi da zero:
-1. Scrivi direttamente il testo ottimizzato
-2. Aggiungi una nota finale con le scelte fatte (parola chiave usata, struttura scelta, ecc.)
+**For new content:** write it directly optimized; add a brief note on keyword placement and structural choices made.
 
-Alla fine suggerisci sempre se serve anche `/seo-schema` (per aggiungere dati strutturati) o `/seo-fix` (per applicare tutto al codice).
+## Handoff
+
+- Add structured data → suggest `/seo-schema`
+- Apply to project files → suggest `/seo-fix`
