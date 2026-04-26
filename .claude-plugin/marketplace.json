@@ -1,0 +1,43 @@
+{
+  "name": "super-seo",
+  "owner": {
+    "name": "Lorenzo Picci",
+    "email": "piccilorenzotech@gmail.com"
+  },
+  "metadata": {
+    "description": "Skill SEO, GEO e AEO per Claude Code — analisi, ottimizzazione contenuti, dati strutturati e correzioni tecniche",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "seo-audit",
+      "version": "1.0.0",
+      "description": "Analizza una pagina o un sito intero e produce un report chiaro con le priorità di intervento",
+      "source": "./skills/seo-audit"
+    },
+    {
+      "name": "seo-content",
+      "version": "1.0.0",
+      "description": "Ottimizza i testi per Google, ma anche per le AI come ChatGPT, Perplexity e Google AI Overviews",
+      "source": "./skills/seo-content"
+    },
+    {
+      "name": "seo-schema",
+      "version": "1.0.0",
+      "description": "Genera il codice che aiuta Google e le AI a capire esattamente di cosa parla la pagina",
+      "source": "./skills/seo-schema"
+    },
+    {
+      "name": "seo-technical",
+      "version": "1.0.0",
+      "description": "Individua e corregge i problemi tecnici che impediscono al sito di essere indicizzato correttamente",
+      "source": "./skills/seo-technical"
+    },
+    {
+      "name": "seo-fix",
+      "version": "1.0.0",
+      "description": "Applica concretamente le correzioni emerse dall'analisi, producendo il codice modificato pronto all'uso",
+      "source": "./skills/seo-fix"
+    }
+  ]
+}

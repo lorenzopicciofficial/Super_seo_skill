@@ -1,0 +1,8 @@
+{
+  "name": "seo-audit",
+  "version": "1.0.0",
+  "description": "Analizza una pagina o un sito intero e produce un report chiaro con le priorità di intervento",
+  "author": {
+    "name": "Lorenzo Picci"
+  }
+}

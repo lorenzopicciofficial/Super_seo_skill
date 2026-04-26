@@ -1,0 +1,8 @@
+{
+  "name": "seo-fix",
+  "version": "1.0.0",
+  "description": "Applica concretamente le correzioni emerse dall'analisi, producendo il codice modificato pronto all'uso",
+  "author": {
+    "name": "Lorenzo Picci"
+  }
+}

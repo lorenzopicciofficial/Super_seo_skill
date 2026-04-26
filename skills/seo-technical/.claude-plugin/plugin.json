@@ -1,0 +1,8 @@
+{
+  "name": "seo-technical",
+  "version": "1.0.0",
+  "description": "Individua e corregge i problemi tecnici che impediscono al sito di essere indicizzato correttamente",
+  "author": {
+    "name": "Lorenzo Picci"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "seo-schema",
+  "version": "1.0.0",
+  "description": "Genera il codice che aiuta Google e le AI a capire esattamente di cosa parla la pagina",
+  "author": {
+    "name": "Lorenzo Picci"
+  }
+}
